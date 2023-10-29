@@ -1,0 +1,22 @@
+.product-actions {
+    position: relative;
+}
+.dropdown-menu {
+    transform: translateY(-10px);
+    box-shadow: 0px 0px 35px -15px black;
+}
+.dropdown-item {
+    padding: 12px !important;
+}
+.dropdown-item:hover {
+    color: white;
+}
+.preview-list {
+    padding: 0;
+}
+.dropdown-divider {
+    margin: 0;
+}
+.preview-subject {
+    z-index: 1000;
+}

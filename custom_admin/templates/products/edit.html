@@ -1,0 +1,89 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Edit Product</h4>
+        <p class="card-description"></p>
+        <form class="forms-sample">
+            <div class="form-group">
+                <label for="product_name" id="editProductForm">Name</label>
+                <input type="text" class="form-control" id="product_name" placeholder="Name" value="{{product.name}}">
+            </div>
+            <div class="form-group">
+                <label for="product_price">Price</label>
+                <input type="email" class="form-control" id="product_price" placeholder="Price" value="{{product.price}}">
+            </div>
+            <div class="form-group">
+                <label for="product_quantity">Quantity Available</label>
+                <input type="email" class="form-control" id="product_quantity" placeholder="Quantity Available" value="{{product.quantity_available}}">
+            </div>
+            <div class="form-group">
+                <label for="product_category">Category</label>
+                <select class="form-control" id="product_category">
+                    {% for category in categories %}
+                    <option id="{{category.id}}">{{category.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Image</label>
+                <input type="file" name="img[]" class="file-upload-default">
+                <div class="input-group col-xs-12">
+                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                    <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                          </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="product_description">Description</label>
+                <textarea class="form-control" id="product_description" rows="4">{{product.description}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button class="btn btn-dark">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#editProductForm").submit(function (event) {
+            event.preventDefault();
+
+            // Get the selected category_id
+            var selectedCategoryId = $("#product_category option:selected").attr("id");
+
+            var formData = new FormData(this);
+            formData.append("name", document.querySelector("#product_name").value)
+            formData.append("price", document.querySelector("#product_price").value)
+            formData.append("quantity", document.querySelector("#product_quantity").value)
+            formData.append("category_id", selectedCategoryId)
+            formData.append("description", document.querySelector("#product_description").value)
+            $.ajax({
+                url: "{% url 'custom_admin:edit_product' %}",
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response);
+                    // Check for a success condition (you may need to modify this based on your response structure)
+                    if (response.status === "success") {
+                        // Redirect to custom_admin/product
+                        window.location.href = "{% url 'custom_admin:admin_page_product' %}";
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+
+                    // Redirect to the error page with the provided context
+                    window.location.href = "{% url 'error' %}?code=" + error.status + "&message=" + error.message;
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
