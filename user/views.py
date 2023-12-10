@@ -66,13 +66,6 @@ def get_product(request, product_id):
         TODO:
             return product với product_id tương ứng
     '''
-    products = Product.product_id.all()
-    response_data = {
-        "total_elements": product_id.count,
-
-        "content": [product.to_dict() for product in product_id.object_list]
-    }
-    return JsonResponse(response_data, status=200)
 
 def add_cart_item(request, product_id):
     '''
