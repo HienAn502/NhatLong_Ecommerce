@@ -1,6 +1,11 @@
-from django.shortcuts import render
+import json
+from unicodedata import category
 
-from custom_admin.models import Product
+from django.http import HttpResponseBadRequest, JsonResponse, HttpResponseNotAllowed
+from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+
+from custom_admin.models import Product, Category
 
 
 def admin_dashboard(request):
@@ -19,6 +24,7 @@ def product_list(request):
     pass
 
 
+@csrf_exempt
 def create_product(request):
     '''
     TODO:
@@ -28,7 +34,46 @@ def create_product(request):
             Validate the information in the form
             Add a new product to the database and redirect to the page with all products
     '''
+    if request.method=="POST":
+        request_data= json.load(request.body.decode('utf-8'))
+        name = request_data.get("name")
+        description = request_data.get("description")
+        try:
+            quantity=int(request_data.get("quantity"))
+            price = float(request_data.get("price"))
+        except  TypeError as error:
+            return HttpResponseBadRequest("bro, it must be a number")
+        category_id = request_data.get("category_id")
+        category = get_object_or_404(Category, id=category_id)
+
+        image = request_data.get("imgURL")
+        product = Product(name=name, description=description, quantity=quantity, price=price, category_id=category, imgURL=image)
+        product.save()
+        return JsonResponse(status=100, data=product.to_dict(), safe=False)
+    elif request.method == "GET":
+        return JsonResponse(status=200, data={"text": "product page"})
+    else:
+        return  HttpResponseNotAllowed('menthod not  allow')
+
+@csrf_exempt
+def create_category(request):
     pass
+    if request.method == "POST":
+        request_data = json.load(request.body.decode('utf-8'))
+        name = request_data.get("name")
+        description = request_data.get("description")
+
+        category = Category(name=name, description=description)
+        category.save()
+        return JsonResponse(status=100, data=category.to_dict(), safe=False)
+
+    elif request.method == "GET":
+        return JsonResponse(status=200, data={"text": "category page"})
+    else:
+        return HttpResponseNotAllowed('menthod not  allow')
+
+
+
 
 
 def edit_product(request, product_id):

@@ -73,7 +73,19 @@ def add_cart_item(request, product_id):
             Validate product_id tồn tại
             Tạo Cart Item với quantity default = 1
             Lưu Cart Item
-    '''
+     '''
+    product = add_cart_item(Product, id=product_id)
+    user_cart, created = Cart.objects.get_or_create(user=request.user)
+
+    # Check if the product is already in the cart
+    if product in user_cart.products.all():
+        # Update quantity or perform any other action
+        pass
+    else:
+        # Add the product to the cart
+        user_cart.products.add(product)
+
+
 
 
 def update_cart_item(request, product_id):
@@ -85,12 +97,30 @@ def update_cart_item(request, product_id):
     '''
 
 
+        product = update_cart_item(Product, id=product_id)
+        user_cart, created = Cart.objects.get_or_create(user=request.user)
+
+        # Check if the product is in the cart
+        if product in user_cart.products.all():
+            # Perform the update logic based on your requirements
+            # For example, updating quantity or removing the item
+            # For simplicity, let's assume you want to double the quantity
+            cart_item = user_cart.cart_items.get(product=product)
+            cart_item.quantity *= 2
+            cart_item.save()
+
+
 def remove_from_cart(request, cart_item_id, cart_id):
     '''
         TODO:
             Validate cart_item_id, cart_id tồn tại
-            Xóa cart_item khỏi database
+            Xóa cart_it em khỏi database
     '''
+    user_cart = remove_from_cart(Cart, id=cart_item_id, user=request.user)
+    cart_item = remove_from_cart(CartItem, id=cart_item_id, cart=user_cart)
+
+    # Remove the item from the cart
+    cart_item.delete()
 
 
 def create_order(request):
