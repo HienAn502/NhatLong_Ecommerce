@@ -2,14 +2,14 @@ import json
 
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-from django.http import HttpResponseBadRequest, JsonResponse, HttpResponseNotAllowed
+from django.http import HttpResponseBadRequest, JsonResponse, HttpResponseNotAllowed, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from django.contrib.auth import logout as auth_logout
 
 from custom_admin import authentication
-from custom_admin.models import Product, Category
+from custom_admin.models import Product, Category, Order
 
 
 @authentication()
@@ -18,7 +18,12 @@ def admin_dashboard(request):
     TODO:
         Render the custom_admin dashboard with relevant statistics and information
     '''
-    return render(request, 'admin_index.html')
+    total_products = Product.objects.count()
+    total_orders = Order.objects.count()
+
+    # Add more statistics or information as needed
+
+    return render(request, 'admin_index.html', {'total_products': total_products, 'total_orders': total_orders})
 
 
 def logout(request):
@@ -173,16 +178,15 @@ def create_product(request):
 
 
 @csrf_exempt
-@authentication()
 def create_category(request):
     if request.method == "POST":
-        request_data = json.load(request.body.decode('utf-8'))
+        request_data = json.loads(request.body.decode('utf-8'))
         name = request_data.get("name")
         description = request_data.get("description")
 
         category = Category(name=name, description=description)
         category.save()
-        return JsonResponse(status=100, data=category.to_dict(), safe=False)
+        return JsonResponse(status=200, data=category.to_dict(), safe=False)
 
     elif request.method == "GET":
         return render(request, 'categories/add.html')
@@ -200,33 +204,41 @@ def edit_product(request, product_id):
             Validate the information in the form
             Update the product information in the database and redirect to the page with all products
     '''
+    product = get_object_or_404(Product, id=product_id)
     if request.method == "POST":
-        request_data = json.loads(request.body.decode("utf-8"))
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        try:
+            quantity = int(request.POST.get("quantity"))
+            price = float(request.POST.get("price"))
+        except TypeError as error:
+            return JsonResponse({"error": "bro, it must be a number"}, status=400)
 
-        name = request_data.get("name")
-        description = request_data.get("description")
-        try:
-            quantity = int(request_data.get("quantity"))
-        except TypeError as error:
-            return HttpResponseBadRequest("quantity must be a number")
-        try:
-            price = float(request_data.get("quantity"))
-        except TypeError as error:
-            return HttpResponseBadRequest("quantity must be a number")
-        category_id = request_data.get("category_id")
+        category_id = request.POST.get("category_id")
         category = get_object_or_404(Category, id=category_id)
-        imgUrl = request_data.get("imgUrl")
 
-        product = Product(name=name, description=description, quantity_available=quantity, price=price,
-                          category=category,
-                          imgUrl=imgUrl)
+        # Handle file upload separately from other form fields
+        image = request.FILES.get("img", None)
+
+        product.name = name
+        product.description = description
+        product.quantity_available = quantity
+        product.price = price
+        product.category_id = category
+        product.imgUrl = image
         product.save()
-
-        return JsonResponse(status=200, data=product.to_dict())
+        # return redirect('custom_admin:admin_page_product')
+        return JsonResponse({"status": "success", "data": product.to_dict()})
     elif request.method == "GET":
-        product = Product.objects.get(id=product_id)
         categories = Category.objects.all()
         return render(request, 'products/edit.html', {"product": product, "categories": categories})
+    elif request.method == "DELETE":
+        try:
+            # Delete the product
+            product.delete()
+            return HttpResponse("Product deleted successfully")
+        except Product.DoesNotExist:
+            return HttpResponse("Error: Product not found", status=404)
     else:
         return HttpResponseNotAllowed("Method Not Allowed")
 
@@ -241,7 +253,6 @@ def edit_user(request, user_id):
             Validate the information in the form
             Update the user information in the database and redirect to the page with all users
     '''
-    pass
 
 
 @authentication()
@@ -250,7 +261,9 @@ def order_list(request):
     TODO:
         Render a page with a list of all orders for custom_admin
     '''
-    pass
+    orders = Order.objects.all()
+
+    return render(request, 'order_list.html', {'orders': orders})
 
 
 @authentication()
@@ -259,7 +272,9 @@ def order_detail(request, order_id):
     TODO:
         Render a page with details of a specific order
     '''
-    pass
+    order = get_object_or_404(Order, id=order_id)
+
+    return render(request, 'order_detail.html', {'order': order})
 
 
 @authentication()
@@ -276,7 +291,7 @@ def update_order_status(request, order_id):
 
 
 @authentication()
-def edit_category(request, category_id):
+def edit_order(request, order_id):
     '''
     TODO:
         method: GET
@@ -285,4 +300,18 @@ def edit_category(request, category_id):
             Validate the information in the form
             Update the category information in the database and redirect to the page with all categories
     '''
-    pass
+    order = get_object_or_404(Order, id=order_id)
+
+    if request.method == 'POST':
+        form = Order(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('all_orders')  # Redirect to the page with all orders
+    else:
+        form = Order(instance=order)
+
+    return render(request, 'update_order_status.html', {'form': form, 'order': order})
+
+
+def edit_category(request):
+    return None
