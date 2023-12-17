@@ -5,468 +5,396 @@
 <!-- header section end -->
 <!-- banner section start -->
 <div class="banner_section layout_padding">
-   <div class="container">
-      <div id="my_slider" class="carousel slide" data-ride="carousel">
-         <div class="carousel-inner">
-            <div class="carousel-item active">
-               <div class="row">
-                  <div class="col-sm-12">
-                     <h1 class="banner_taital">Get Start <br>Your favriot shoping</h1>
-                     <div class="buynow_bt"><a href="#">Buy Now</a></div>
-                  </div>
-               </div>
+    <div class="container">
+        <div id="my_slider" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="banner_taital">Get Start <br>Your favorite shoping</h1>
+                            <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="banner_taital">Get Start <br>Your favorite shoping</h1>
+                            <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="banner_taital">Get Start <br>Your favorite shoping</h1>
+                            <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="carousel-item">
-               <div class="row">
-                  <div class="col-sm-12">
-                     <h1 class="banner_taital">Get Start <br>Your favriot shoping</h1>
-                     <div class="buynow_bt"><a href="#">Buy Now</a></div>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item">
-               <div class="row">
-                  <div class="col-sm-12">
-                     <h1 class="banner_taital">Get Start <br>Your favorite shoping</h1>
-                     <div class="buynow_bt"><a href="#">Buy Now</a></div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
-            <i class="fa fa-angle-left"></i>
-         </a>
-         <a class="carousel-control-next" href="#my_slider" role="button" data-slide="next">
-            <i class="fa fa-angle-right"></i>
-         </a>
-      </div>
-   </div>
+            <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="carousel-control-next" href="#my_slider" role="button" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
 <!-- banner section end -->
-</div>
 <!-- banner bg main end -->
 <!-- fashion section start -->
+{% for item in items %}
 <div class="fashion_section">
-   <div id="main_slider" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-         <div class="carousel-item active">
-            <div class="container">
-               <h1 class="fashion_taital">Gói hàng Mirny-13</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Mirny:gói đại úy</h4>
-                           <p class="price_text">Price <span style="color: #262626;">1.356.618 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/tshirt-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
+    <div id="main_slider" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <h1 class="fashion_taital">{{item.category_name}}</h1>
+                    <div class="fashion_section_2">
+                        <div class="row">
+                            {% for product in item.products|slice:":3" %}
+                            <div class="col-lg-4 col-sm-4">
+                                <div class="box_main">
+                                    <h4 class="shirt_text">{{product.name}}</h4>
+                                    <p class="price_text">Price <span style="color: #262626;">{{product.price}} ₫</span></p>
+                                    <div class="tshirt_img"><img src="{% static 'images/tshirt-img.png' %}"></div>
+                                    <div class="btn_main">
+                                        <div class="buy_bt"><a href="#">Buy Now</a></div>
+                                        <div class="seemore_bt"><a href="#">See More</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Mirny:gói trung úy</h4>-->
+<!--                                    <p class="price_text">Price <span style="color: #262626;">764.169 ₫</span></p>-->
+<!--                                    <div class="tshirt_img"><img src="images/dress-shirt-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">KING TIGER (C) VỚI KIỂU MẪU 3D</h4>-->
+<!--                                    <p class="price_text">Price <span style="color: #262626;">959.591 ₫</span></p>-->
+<!--                                    <div class="tshirt_img"><img src="images/women-clothes-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Mirny:gói trung úy</h4>
-                           <p class="price_text">Price <span style="color: #262626;">764.169 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/dress-shirt-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">KING TIGER (C) VỚI KIỂU MẪU 3D</h4>
-                           <p class="price_text">Price <span style="color: #262626;">959.591 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/women-clothes-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </div>
-         </div>
-         <div class="carousel-item">
-            <div class="container">
-               <h1 class="fashion_taital">Gói hàng Mirny-13</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Centurion Action X</h4>
-                           <p class="price_text">Price <span style="color: #262626;">467.019 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/ACTION-X.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">AML-LYNX-6X6</h4>
-                           <p class="price_text">Price <span style="color: #262626;">366.509 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/AML-LYNX-6X6.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Manticore</h4>
-                           <p class="price_text">Price <span style="color: #262626;">326.913 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/Manticore.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="carousel-item">
-            <div class="container">
-               <h1 class="fashion_taital">Gói hàng Mirny-13</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Leopard-1</h4>
-                           <p class="price_text">Price <span style="color: #262626;">326.913 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/Leopard-1.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">IS-7</h4>
-                           <p class="price_text">Price <span style="color: #262626;">326.913 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/IS-7.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">E50-m</h4>
-                           <p class="price_text">Price <span style="color: #262626;">291.820 ₫</span></p>
-                           <div class="tshirt_img"><img src="images/E50-m.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">
-         <i class="fa fa-angle-left"></i>
-      </a>
-      <a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">
-         <i class="fa fa-angle-right"></i>
-      </a>
-   </div>
+        </div>
+    </div>
 </div>
+{% endfor %}
+<!--<a class="carousel-control-prev" href="#main_slider" role="button" data-slide="prev">-->
+<!--    <i class="fa fa-angle-left"></i>-->
+<!--</a>-->
+<!--<a class="carousel-control-next" href="#main_slider" role="button" data-slide="next">-->
+<!--    <i class="fa fa-angle-right"></i>-->
+<!--</a>-->
 <!-- fashion section end -->
 <!-- electronic section start -->
-<div class="fashion_section">
-   <div id="electronic_main_slider" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-         <div class="carousel-item active">
-            <div class="container">
-               <h1 class="fashion_taital">Hàng "Nóng"</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">T-34-3:Hạng Sang</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.436.637 ₫</span></p>
-                           <div class="electronic_img"><img src="images/laptop-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">TS-5: HẠNG SANG</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.390.884 ₫</span></p>
-                           <div class="electronic_img"><img src="images/mobile-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">M47 IRON ARNIE: SIÊU SANG</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.986.352 ₫</span></p>
-                           <div class="electronic_img"><img src="images/computer-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="carousel-item">
-            <div class="container">
-               <h1 class="fashion_taital">Hàng "Nóng"</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">T-34-3:Hạng Sang</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.436.637 ₫</span></p>
-                           <div class="electronic_img"><img src="images/laptop-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">TS-5: HẠNG SANG</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.390.884 ₫</span></p>
-                           <div class="electronic_img"><img src="images/mobile-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">M47 IRON ARNIE: SIÊU SANG</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.986.352 ₫</span></p>
-                           <div class="electronic_img"><img src="images/computer-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="carousel-item">
-            <div class="container">
-               <h1 class="fashion_taital">Hàng "Nóng"</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">T-34-3:Hạng Sang</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.436.637 ₫</span></p>
-                           <div class="electronic_img"><img src="images/laptop-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">TS-5: HẠNG SANG</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.390.884 ₫</span></p>
-                           <div class="electronic_img"><img src="images/mobile-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">M47 IRON ARNIE: SIÊU SANG</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">1.986.352 ₫</span></p>
-                           <div class="electronic_img"><img src="images/computer-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <a class="carousel-control-prev" href="#electronic_main_slider" role="button" data-slide="prev">
-         <i class="fa fa-angle-left"></i>
-      </a>
-      <a class="carousel-control-next" href="#electronic_main_slider" role="button" data-slide="next">
-         <i class="fa fa-angle-right"></i>
-      </a>
-   </div>
-</div>
+<!--<div class="fashion_section">-->
+<!--    <div id="electronic_main_slider" class="carousel slide" data-ride="carousel">-->
+<!--        <div class="carousel-inner">-->
+<!--            <div class="carousel-item active">-->
+<!--                <div class="container">-->
+<!--                    <h1 class="fashion_taital">Hàng "Nóng"</h1>-->
+<!--                    <div class="fashion_section_2">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">T-34-3:Hạng Sang</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.436.637 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/laptop-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">TS-5: HẠNG SANG</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.390.884 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/mobile-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">M47 IRON ARNIE: SIÊU SANG</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.986.352 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/computer-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="carousel-item">-->
+<!--                <div class="container">-->
+<!--                    <h1 class="fashion_taital">Hàng "Nóng"</h1>-->
+<!--                    <div class="fashion_section_2">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">T-34-3:Hạng Sang</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.436.637 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/laptop-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">TS-5: HẠNG SANG</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.390.884 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/mobile-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">M47 IRON ARNIE: SIÊU SANG</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.986.352 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/computer-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="carousel-item">-->
+<!--                <div class="container">-->
+<!--                    <h1 class="fashion_taital">Hàng "Nóng"</h1>-->
+<!--                    <div class="fashion_section_2">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">T-34-3:Hạng Sang</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.436.637 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/laptop-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">TS-5: HẠNG SANG</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.390.884 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/mobile-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">M47 IRON ARNIE: SIÊU SANG</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">1.986.352 ₫</span>-->
+<!--                                    </p>-->
+<!--                                    <div class="electronic_img"><img src="images/computer-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <a class="carousel-control-prev" href="#electronic_main_slider" role="button" data-slide="prev">-->
+<!--            <i class="fa fa-angle-left"></i>-->
+<!--        </a>-->
+<!--        <a class="carousel-control-next" href="#electronic_main_slider" role="button" data-slide="next">-->
+<!--            <i class="fa fa-angle-right"></i>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</div>-->
 <!-- electronic section end -->
 <!-- jewellery  section start -->
-<div class="jewellery_section">
-   <div id="jewellery_main_slider" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-         <div class="carousel-item active">
-            <div class="container">
-               <h1 class="fashion_taital">Jewellery Accessories</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Jumkas</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/jhumka-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Necklaces</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/neklesh-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Kangans</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/kangan-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="carousel-item">
-            <div class="container">
-               <h1 class="fashion_taital">Jewellery Accessories</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Jumkas</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/jhumka-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Necklaces</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/neklesh-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Kangans</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/kangan-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="carousel-item">
-            <div class="container">
-               <h1 class="fashion_taital">Jewellery Accessories</h1>
-               <div class="fashion_section_2">
-                  <div class="row">
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Jumkas</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/jhumka-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Necklaces</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/neklesh-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4 col-sm-4">
-                        <div class="box_main">
-                           <h4 class="shirt_text">Kangans</h4>
-                           <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>
-                           <div class="jewellery_img"><img src="images/kangan-img.png"></div>
-                           <div class="btn_main">
-                              <div class="buy_bt"><a href="#">Buy Now</a></div>
-                              <div class="seemore_bt"><a href="#">See More</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <a class="carousel-control-prev" href="#jewellery_main_slider" role="button" data-slide="prev">
-         <i class="fa fa-angle-left"></i>
-      </a>
-      <a class="carousel-control-next" href="#jewellery_main_slider" role="button" data-slide="next">
-         <i class="fa fa-angle-right"></i>
-      </a>
-      <div class="loader_main">
-         <div class="loader"></div>
-      </div>
-   </div>
-</div>
+<!--<div class="jewellery_section">-->
+<!--    <div id="jewellery_main_slider" class="carousel slide" data-ride="carousel">-->
+<!--        <div class="carousel-inner">-->
+<!--            <div class="carousel-item active">-->
+<!--                <div class="container">-->
+<!--                    <h1 class="fashion_taital">Jewellery Accessories</h1>-->
+<!--                    <div class="fashion_section_2">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Jumkas</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/jhumka-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Necklaces</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/neklesh-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Kangans</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/kangan-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="carousel-item">-->
+<!--                <div class="container">-->
+<!--                    <h1 class="fashion_taital">Jewellery Accessories</h1>-->
+<!--                    <div class="fashion_section_2">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Jumkas</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/jhumka-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Necklaces</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/neklesh-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Kangans</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/kangan-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="carousel-item">-->
+<!--                <div class="container">-->
+<!--                    <h1 class="fashion_taital">Jewellery Accessories</h1>-->
+<!--                    <div class="fashion_section_2">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Jumkas</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/jhumka-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Necklaces</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/neklesh-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-4 col-sm-4">-->
+<!--                                <div class="box_main">-->
+<!--                                    <h4 class="shirt_text">Kangans</h4>-->
+<!--                                    <p class="price_text">Start Price <span style="color: #262626;">$ 100</span></p>-->
+<!--                                    <div class="jewellery_img"><img src="images/kangan-img.png"></div>-->
+<!--                                    <div class="btn_main">-->
+<!--                                        <div class="buy_bt"><a href="#">Buy Now</a></div>-->
+<!--                                        <div class="seemore_bt"><a href="#">See More</a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <a class="carousel-control-prev" href="#jewellery_main_slider" role="button" data-slide="prev">-->
+<!--            <i class="fa fa-angle-left"></i>-->
+<!--        </a>-->
+<!--        <a class="carousel-control-next" href="#jewellery_main_slider" role="button" data-slide="next">-->
+<!--            <i class="fa fa-angle-right"></i>-->
+<!--        </a>-->
+<!--        <div class="loader_main">-->
+<!--            <div class="loader"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 <!-- jewellery  section end -->
 
 {% endblock %}

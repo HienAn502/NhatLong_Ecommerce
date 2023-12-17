@@ -550,9 +550,11 @@ a:hover {
 /* fashion section start */
 
 .fashion_section {
+    background-color: white;
     width: 100%;
     float: left;
-    padding-bottom: 150px;
+    padding-bottom: 50px;
+    padding-top: 30px;
 }
 
 .fashion_taital {

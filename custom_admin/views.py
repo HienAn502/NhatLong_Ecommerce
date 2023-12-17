@@ -1,30 +1,139 @@
 import json
-from unicodedata import category
 
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.http import HttpResponseBadRequest, JsonResponse, HttpResponseNotAllowed
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 
+from django.contrib.auth import logout as auth_logout
+
+from custom_admin import authentication
 from custom_admin.models import Product, Category
 
 
+@authentication()
 def admin_dashboard(request):
     '''
     TODO:
         Render the custom_admin dashboard with relevant statistics and information
     '''
-    pass
+    return render(request, 'admin_index.html')
 
 
-def product_list(request):
+def logout(request):
+    auth_logout(request)
+    return redirect('/')
+
+
+def get_list_product(request):
     '''
-    TODO:
-        Render a page with a list of all products for custom_admin
+        TODO:
+            return list bao gồm tất cả các product
     '''
-    pass
+    products = Product.objects.all()
+    get_list_product = [product.to_dict() for product in products]
+    return JsonResponse(get_list_product, status=200, safe=False)
+
+
+def get_list_category(request):
+    products = Product.objects.all()
+    get_list_category = []
+    for product in products:
+        get_list_category.append(product.to_dict())
+
+    get_list_category = [product.to_dict() for product in products]
+    return JsonResponse(get_list_category, status=200)
+
+
+def get_page_product(request):
+    '''
+        TODO:
+            return trang tất cả product nhưng bao gồm phân trang
+            product.html
+    '''
+    page = request.GET.get('page', 1)
+    size = request.GET.get('size', 50)
+
+    # Convert page and size to integers
+    page = int(page)
+    size = int(size)
+    products = Product.objects.all()
+    paginator = Paginator(products, size)
+    page_obj = paginator.get_page(page)
+    response_data = {
+        "total_elements": paginator.count,
+        "total_pages": paginator.num_pages,
+        "current_page": page,
+        "content": [product.to_dict() for product in page_obj.object_list]
+    }
+    return render(request, 'products/list.html', context=response_data)
+
+
+def get_page_category(request):
+    page = request.GET.get('page', 1)
+    size = request.GET.get('size', 50)
+
+    # Convert page and size to integers
+    page = int(page)
+    size = int(size)
+    categorys = Category.objects.all()
+    paginator = Paginator(categorys, size)
+    page_obj = paginator.get_page(page)
+    response_data = {
+        "total_elements": paginator.count,
+        "total_pages": paginator.num_pages,
+        "current_page": page,
+        "content": [category.to_dict() for category in page_obj.object_list]
+    }
+    return render(request, 'categories/list.html', context=response_data)
+
+
+def get_page_user(request):
+    page = request.GET.get('page', 1)
+    size = request.GET.get('size', 50)
+
+    # Convert page and size to integers
+    page = int(page)
+    size = int(size)
+    users = User.objects.all()
+    paginator = Paginator(users, size)
+    page_obj = paginator.get_page(page)
+    users_dict = []
+    for user in page_obj.object_list:
+        users_dict.append({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "role": "ADMIN" if user.is_superuser else "USER",
+            "date_joined": user.date_joined
+        })
+    response_data = {
+        "total_elements": paginator.count,
+        "total_pages": paginator.num_pages,
+        "current_page": page,
+        "content": users_dict
+    }
+    return render(request, 'users/list.html', context=response_data)
 
 
 @csrf_exempt
+@authentication()
+def create_user(request):
+    '''
+    TODO:
+        method: GET
+            Render the Add User page with the form
+        method: POST
+            Validate the information in the form
+            Add a new user to the database and redirect to the page with all users
+    '''
+
+
+@csrf_exempt
+@authentication()
 def create_product(request):
     '''
     TODO:
@@ -34,30 +143,38 @@ def create_product(request):
             Validate the information in the form
             Add a new product to the database and redirect to the page with all products
     '''
-    if request.method=="POST":
-        request_data= json.load(request.body.decode('utf-8'))
-        name = request_data.get("name")
-        description = request_data.get("description")
+    if request.method == "POST":
+        # For file uploads, use request.FILES for the image field
+        name = request.POST.get("name")
+        description = request.POST.get("description")
         try:
-            quantity=int(request_data.get("quantity"))
-            price = float(request_data.get("price"))
-        except  TypeError as error:
-            return HttpResponseBadRequest("bro, it must be a number")
-        category_id = request_data.get("category_id")
+            quantity = int(request.POST.get("quantity"))
+            price = float(request.POST.get("price"))
+        except TypeError as error:
+            return JsonResponse({"error": "bro, it must be a number"}, status=400)
+
+        category_id = request.POST.get("category_id")
         category = get_object_or_404(Category, id=category_id)
 
-        image = request_data.get("imgURL")
-        product = Product(name=name, description=description, quantity=quantity, price=price, category_id=category, imgURL=image)
+        # Handle file upload separately from other form fields
+        image = request.FILES.get("img", None)
+
+        product = Product(name=name, description=description, quantity_available=quantity, price=price, category_id=category,
+                          imgUrl=image)
         product.save()
-        return JsonResponse(status=100, data=product.to_dict(), safe=False)
+
+        # return redirect('custom_admin:admin_page_product')
+        return JsonResponse({"status": "success", "data": product.to_dict()})
     elif request.method == "GET":
-        return JsonResponse(status=200, data={"text": "product page"})
+        categories = Category.objects.all()
+        return render(request, 'products/add.html', {"categories": categories})
     else:
-        return  HttpResponseNotAllowed('menthod not  allow')
+        return JsonResponse({"error": "Method not allowed"}, status=405)
+
 
 @csrf_exempt
+@authentication()
 def create_category(request):
-    pass
     if request.method == "POST":
         request_data = json.load(request.body.decode('utf-8'))
         name = request_data.get("name")
@@ -68,14 +185,12 @@ def create_category(request):
         return JsonResponse(status=100, data=category.to_dict(), safe=False)
 
     elif request.method == "GET":
-        return JsonResponse(status=200, data={"text": "category page"})
+        return render(request, 'categories/add.html')
     else:
         return HttpResponseNotAllowed('menthod not  allow')
 
 
-
-
-
+@authentication()
 def edit_product(request, product_id):
     '''
     TODO:
@@ -85,18 +200,51 @@ def edit_product(request, product_id):
             Validate the information in the form
             Update the product information in the database and redirect to the page with all products
     '''
-    pass
+    if request.method == "POST":
+        request_data = json.loads(request.body.decode("utf-8"))
+
+        name = request_data.get("name")
+        description = request_data.get("description")
+        try:
+            quantity = int(request_data.get("quantity"))
+        except TypeError as error:
+            return HttpResponseBadRequest("quantity must be a number")
+        try:
+            price = float(request_data.get("quantity"))
+        except TypeError as error:
+            return HttpResponseBadRequest("quantity must be a number")
+        category_id = request_data.get("category_id")
+        category = get_object_or_404(Category, id=category_id)
+        imgUrl = request_data.get("imgUrl")
+
+        product = Product(name=name, description=description, quantity_available=quantity, price=price,
+                          category=category,
+                          imgUrl=imgUrl)
+        product.save()
+
+        return JsonResponse(status=200, data=product.to_dict())
+    elif request.method == "GET":
+        product = Product.objects.get(id=product_id)
+        categories = Category.objects.all()
+        return render(request, 'products/edit.html', {"product": product, "categories": categories})
+    else:
+        return HttpResponseNotAllowed("Method Not Allowed")
 
 
-def delete_product(request, product_id):
+@authentication()
+def edit_user(request, user_id):
     '''
     TODO:
-        If product_id exists - Delete the product from the database
-        If not - return an error message
+        method: GET
+            Render the Update User page with the form
+        method: POST
+            Validate the information in the form
+            Update the user information in the database and redirect to the page with all users
     '''
     pass
 
 
+@authentication()
 def order_list(request):
     '''
     TODO:
@@ -105,6 +253,7 @@ def order_list(request):
     pass
 
 
+@authentication()
 def order_detail(request, order_id):
     '''
     TODO:
@@ -113,6 +262,7 @@ def order_detail(request, order_id):
     pass
 
 
+@authentication()
 def update_order_status(request, order_id):
     '''
     TODO:
@@ -121,5 +271,18 @@ def update_order_status(request, order_id):
         method: POST
             Validate the information in the form
             Update the order status in the database and redirect to the page with all orders
+    '''
+    pass
+
+
+@authentication()
+def edit_category(request, category_id):
+    '''
+    TODO:
+        method: GET
+            Render the Update Category page with the form
+        method: POST
+            Validate the information in the form
+            Update the category information in the database and redirect to the page with all categories
     '''
     pass
