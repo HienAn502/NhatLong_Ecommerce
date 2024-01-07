@@ -41,7 +41,7 @@ def register(request):
             user = authenticate(request, username=username, password=password)
             auth_login(request, user)
 
-            return redirect('/')
+            return redirect('user:index')
         else:
             messages.error(request, f"{form.error_messages}")
     else:
@@ -60,7 +60,7 @@ def login(request):
             if user is not None:
                 auth_login(request, user)
                 # Redirect to a success page or home page
-                return redirect('/')  # Replace 'home' with the URL name of your home page
+                return redirect('user:index')  # Replace 'home' with the URL name of your home page
         else:
             messages.error(request, f"{form.error_messages}")
     else:
@@ -202,7 +202,6 @@ def get_order_detail(request, order_id):
         TODO:
             Trả về thông tin order, và list order item
     '''
-
 
 def error(request):
     code = request.GET.get('code', 500)

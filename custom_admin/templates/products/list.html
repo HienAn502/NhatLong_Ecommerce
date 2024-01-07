@@ -76,7 +76,7 @@
                 }
             })
             .catch(error => {
-                window.location.href = "{% url 'error' %}?code=" + error.status + "&message=" + error.message;
+                window.location.href = "{% url 'user:error' %}?code=" + error.status + "&message=" + error.message;
             });
         }
     }
