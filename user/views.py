@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from custom_admin.models import Product, Category
+from user import authentication
 from user.forms import CustomUserCreationForm
 from user.models import ShoppingCart, CartItem
 
@@ -133,6 +134,7 @@ def get_product(request, product_id):
     '''
 
 
+@authentication()
 def add_cart_item(request, product_id):
     '''
         TODO:
@@ -202,6 +204,7 @@ def get_order_detail(request, order_id):
         TODO:
             Trả về thông tin order, và list order item
     '''
+
 
 def error(request):
     code = request.GET.get('code', 500)

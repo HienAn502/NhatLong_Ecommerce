@@ -2,7 +2,6 @@ from functools import wraps
 
 from django.shortcuts import render
 
-
 def authentication():
     def decorator(view_func):
         @wraps(view_func)

@@ -48,42 +48,30 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $("#createProductForm").submit(function (event) {
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("createProductForm").addEventListener("submit", function (event) {
             event.preventDefault();
-
-            // Get the selected category_id
-            var selectedCategoryId = $("#product_category option:selected").attr("id");
-
+            var selectedCategoryId = document.getElementById("product_category").options[document.getElementById("product_category").selectedIndex].id;
             var formData = new FormData(this);
-            formData.append("name", document.querySelector("#product_name").value)
-            formData.append("price", document.querySelector("#product_price").value)
-            formData.append("quantity", document.querySelector("#product_quantity").value)
-            formData.append("category_id", selectedCategoryId)
-            formData.append("description", document.querySelector("#product_description").value)
-            $.ajax({
-                url: "{% url 'custom_admin:create_product' %}",
+            formData.append("name", document.querySelector("#product_name").value);
+            formData.append("price", document.querySelector("#product_price").value);
+            formData.append("quantity", document.querySelector("#product_quantity").value);
+            formData.append("category_id", selectedCategoryId);
+            formData.append("description", document.querySelector("#product_description").value);
+            fetch("{% url 'custom_admin:create_product' %}", {
                 method: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    console.log(response);
-                    // Check for a success condition (you may need to modify this based on your response structure)
-                    if (response.status === "success") {
-                        // Redirect to custom_admin/product
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
                         window.location.href = "{% url 'custom_admin:admin_page_product' %}";
                     }
-                },
-                error: function (error) {
-                    console.error(error);
-
-                    // Redirect to the error page with the provided context
+                })
+                .catch(error => {
                     window.location.href = "{% url 'error' %}?code=" + error.status + "&message=" + error.message;
-                }
-            });
+                });
         });
     });
 </script>
-
 {% endblock %}
