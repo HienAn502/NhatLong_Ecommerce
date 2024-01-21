@@ -13,17 +13,13 @@
                     <th></th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Price</th>
-                    <th>Quantity Available</th>
-                    <th>Category</th>
-                    <th>Image</th>
                     <th>Created date</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for product in content %}
                 <tr>
-                    <td class="product-actions" id="{{ product.id }}">
+                    <td class="categories-actions" id="{{ categories.id }}">
                         <i class="mdi mdi-settings" onclick="showProductOptions(this)"></i>
                         <div class="dropdown-menu dropdown-menu-left navbar-dropdown preview-list show"
                              style="display: none;">
@@ -32,20 +28,17 @@
                                 <p class="preview-subject ellipsis mb-1">Edit product</p>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item preview-item" onclick="deleteProduct('{{product.id}}')">
+                            <a href="#" class="dropdown-item preview-item" onclick="deleteProduct('{[categories.id}}')">
                                 <p class="preview-subject ellipsis mb-1">Delete product</p>
                             </a>
                         </div>
                     </td>
 
 
-                    <td>{{product.name}}</td>
-                    <td>{{product.description}}</td>
-                    <td>{{product.price}}</td>
-                    <td>{{product.quantity_available}}</td>
-                    <td>{{product.category.name}}</td>
-                    <td>{{product.imgUrl}}</td>
-                    <td>{{product.create_date}}</td>
+                    <td>{{categories.name}}</td>
+                    <td>{{categories.description}}</td><
+
+                    <td>{{categories.create_date}}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -61,7 +54,7 @@
 
         if (confirmDelete) {
             // Make a DELETE request using the Fetch API
-            fetch("".replace('0', productId), {
+            fetch("".replace('0', categoriesId), {
                 method: 'DELETE',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken'),  // Include the CSRF token in the headers
