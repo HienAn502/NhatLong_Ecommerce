@@ -27,12 +27,12 @@
                         <i class="mdi mdi-settings" onclick="showProductOptions(this)"></i>
                         <div class="dropdown-menu dropdown-menu-left navbar-dropdown preview-list show"
                              style="display: none;">
-                            <a href=""
+                            <a href="{% url 'custom_admin:edit_product' product_id=product.id %}"
                                class="dropdown-item preview-item">
                                 <p class="preview-subject ellipsis mb-1">Edit product</p>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item preview-item" onclick="deleteProduct('{{product.id}}')">
+                            <a href="#" class="dropdown-item preview-item" onclick="return deleteProduct('{{product.id}}')">
                                 <p class="preview-subject ellipsis mb-1">Delete product</p>
                             </a>
                         </div>
@@ -56,18 +56,19 @@
 <script src="{% static '/products/product.js' %}"></script>
 <script>
     function deleteProduct(productId) {
+        console.log(productId)
         // Confirm the deletion with the user (optional)
         var confirmDelete = confirm("Are you sure you want to delete this product?");
 
         if (confirmDelete) {
             // Make a DELETE request using the Fetch API
-            fetch("".replace('0', productId), {
+            fetch("{% url 'custom_admin:edit_product' product_id=0 %}".replace('0', productId), {
                 method: 'DELETE',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken'),  // Include the CSRF token in the headers
                     'Content-Type': 'application/json'
                 },
-            })
+            }
             .then(response => {
                 if (response.status === "success") {
                         // Redirect to custom_admin/product
@@ -77,8 +78,9 @@
             })
             .catch(error => {
                 window.location.href = "{% url 'user:error' %}?code=" + error.status + "&message=" + error.message;
-            });
+            }));
         }
+        return false;
     }
 
     // Function to get CSRF token from cookies

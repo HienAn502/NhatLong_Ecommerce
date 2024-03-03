@@ -54,7 +54,7 @@
 
         if (confirmDelete) {
             // Make a DELETE request using the Fetch API
-            fetch("".replace('0', categoriesId), {
+            fetch("{% url 'my' %}), {
                 method: 'DELETE',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken'),  // Include the CSRF token in the headers
